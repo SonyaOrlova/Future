@@ -1,0 +1,30 @@
+.search {
+	display: flex;
+
+	margin-bottom: 20px;
+
+	align-items: center;
+}
+
+.search__input {
+	box-sizing: border-box;
+	width: 320px;
+	min-height: 35px;
+	margin-right: 10px;
+	padding: 5px 10px;
+
+	border: 1px solid #000000;
+}
+
+.search__submit {
+	font-size: 12px;
+	font-weight: 700;
+
+	width: 35px;
+	height: 35px;
+	padding: 5px;
+
+	border: 1px solid #000000;
+	border-radius: 50%;
+	background-color: #ffd700;
+}

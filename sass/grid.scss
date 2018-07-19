@@ -1,0 +1,66 @@
+.data__table {
+	width: 100%;
+
+	table-layout: fixed;
+	border-collapse: collapse;
+
+	text-align: center;
+	word-wrap: break-word;
+
+	border: 1px solid #000000;
+}
+
+.data__head {
+	cursor: pointer;
+
+	border: 1px solid #000000;
+	background-color: #ff7f50;
+}
+
+.data__body {
+	font-size: 13px;
+}
+
+.data__item {
+	border-bottom: 1px solid #c0c0c0;
+
+	&:last-of-type {
+		border-bottom: none;
+	}
+
+	td {
+		padding: 10px;
+	}
+}
+
+.downsort,
+.upsort {
+	position: relative;
+	&::after {
+		position: absolute;
+		top: 0;
+		right: 20px;
+		bottom: 0;
+
+		display: block;
+
+		width: 20px;
+		height: 20px;
+		margin: auto 0;
+
+		content: "";
+
+		background: url("../images/arrow.png") repeat center;
+		background-size: contain;
+	}
+}
+
+.upsort {
+	&::after {
+		transform: rotate(-180deg);
+	}
+}
+
+.highlighted {
+	background-color: #ffd700;
+}

@@ -1,0 +1,93 @@
+#loading {
+	width: 73px;
+	margin: 0 auto;
+}
+
+.loading {
+	float: left;
+
+	width: 13px;
+	height: 13px;
+	margin-left: 17px;
+
+	animation-name: bounce_loading;
+	animation-duration: 1.95s;
+	animation-iteration-count: infinite;
+	animation-direction: normal;
+
+	border-radius: 21px;
+	background-color: #ffffff;
+}
+
+#loading_1 {
+	margin-left: 0;
+	animation-delay: 0.39s;
+}
+
+#loading_2 {
+	animation-delay: 0.91s;
+}
+
+#loading_3 {
+	animation-delay: 1.17s;
+}
+
+@keyframes bounce_loading {
+	0% {
+	}
+
+	50% {
+		background-color: #000000;
+	}
+
+	100% {
+	}
+}
+
+@-o-keyframes bounce_loading {
+	0% {
+	}
+
+	50% {
+		background-color: #000000;
+	}
+
+	100% {
+	}
+}
+
+@-ms-keyframes bounce_loading {
+	0% {
+	}
+
+	50% {
+		background-color: #000000;
+	}
+
+	100% {
+	}
+}
+
+@-webkit-keyframes bounce_loading {
+	0% {
+	}
+
+	50% {
+		background-color: #000000;
+	}
+
+	100% {
+	}
+}
+
+@-moz-keyframes bounce_loading {
+	0% {
+	}
+
+	50% {
+		background-color: #000000;
+	}
+
+	100% {
+	}
+}

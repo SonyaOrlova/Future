@@ -1,0 +1,19 @@
+.detail {
+	color: #696969;
+	p {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		b {
+			color: #000000;
+		}
+	}
+
+	textarea {
+		width: 300px;
+		min-height: 100px;
+		margin-top: 10px;
+		padding: 10px;
+
+		resize: none;
+	}
+}

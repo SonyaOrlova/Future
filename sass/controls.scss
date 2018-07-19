@@ -1,0 +1,27 @@
+.data__size-btn {
+	font-weight: 700;
+
+	position: relative;
+
+	width: 150px;
+	min-height: 40px;
+	margin-right: 20px;
+	padding: 5px 10px;
+
+	cursor: pointer;
+
+	border: 2px solid #000000;
+	background-color: #dcdcdc;
+
+
+	&:last-of-type {
+		margin-right: 0;
+	}
+
+	&:hover {
+		background-color: #d3d3d3;
+	}
+	&:active {
+		top: 1px;
+	}
+}

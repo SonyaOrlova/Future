@@ -1,0 +1,53 @@
+.page-header {
+	display: flex;
+
+	box-sizing: border-box;
+	min-height: 40px;
+	padding: 1% 2.5%;
+
+	text-align: center;
+
+	background-color: #ffffff;
+
+	justify-content: center;
+
+	h1 {
+		font-size: 12px;
+		font-weight: 400;
+
+		margin-left: auto;
+		padding-top: 5px;
+
+		text-transform: uppercase;
+
+		color: #000000;
+
+		b {
+			font-size: 13px;
+			font-weight: 700;
+
+			color: #ff4500;
+		}
+	}
+}
+
+.copyright {
+	font-size: 12px;
+
+	margin-right: 20px;
+
+	color: #696969;
+	b {
+		font-size: 14px;
+
+		color: #000000;
+	}
+}
+
+.contacts {
+	padding-top: 8px;
+}
+
+.social__link {
+	margin-right: 5px;
+}

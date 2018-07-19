@@ -1,0 +1,19 @@
+.page-main {
+	display: flex;
+
+	box-sizing: border-box;
+	padding: 1.5% 2.5%;
+
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.controls,
+.content {
+	width: 100%;
+	margin-bottom: 40px;
+}
+
+.controls {
+	text-align: center;
+}
