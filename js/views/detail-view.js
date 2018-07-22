@@ -1,25 +1,26 @@
 import AbstractView from './abstract-view';
 
 export default class DetailView extends AbstractView {
-	constructor(it) {
+	constructor(item) {
 		super();
-		this.it = it;
+		this.item = item;
 	}
 
 	get template() {
-		if (this.it) {
+		if (this.item) {
 			return `
 			<div class="detail">
-			<p> Выбран пользователь: <b>${this.it.firstName + ` ` + this.it.lastName}</b> <p>
+			<p> Выбран пользователь: <b>${this.item.firstName + ` ` + this.item.lastName}</b> <p>
 			<p>Описание: </br>
-			<textarea>${this.it.description}</textarea>
+			<textarea>${this.item.description}</textarea>
 			</p>
-			<p>Адрес проживания: <b>${this.it.address[`streetAddress`]}</b></p>
-			<p>Город: <b>${this.it.address[`city`]}</b></p>
-			<p>Провинция/штат: <b>${this.it.address[`state`]}</b></p>
-			<p>Индекс: <b>${this.it.address[`zip`]}</b></p>
+			<p>Адрес проживания: <b>${this.item.address[`streetAddress`]}</b></p>
+			<p>Город: <b>${this.item.address[`citemy`]}</b></p>
+			<p>Провинция/штат: <b>${this.item.address[`state`]}</b></p>
+			<p>Индекс: <b>${this.item.address[`zip`]}</b></p>
 			</div>
 			`;
 		} return ``;
 	}
 }
+

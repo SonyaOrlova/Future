@@ -1,102 +1,81 @@
 import AbstractView from './abstract-view';
-import tableTemplate from '../templates/table-template';
-
-import {descSort, ascSort} from '../utils/sorting';
 
 export default class GridView extends AbstractView {
-  constructor(data, limitRecords, currentPage) {
+  constructor(data, gridViewState) {
     super();
     this.data = data;
-    this.state = {
-      descSortFlag: false,
-      limitRecords,
-      currentPage
-    };
+    this.state = gridViewState;
   }
 
   get template() {
     return `
-    <section class="data">
-    <h2 class="data__title visually-hidden">Таблица данных</h2>
-    </section>
-    ${tableTemplate(this.data, this.state.limitRecords, this.state.currentPage)}
+    <table class="data__table">
+    <thead class="data__head">
+    <tr>
+    <th class="data-head__id" data-type="number" data-name="id">ID</th>
+    <th class="data-head__firstName" data-name="firstName">FirstName</th>
+    <th class="data-head__lastName" data-name="lastName">LastName</th>
+    <th class="data-head__email" data-name="email">Email</th>
+    <th class="data-head__phone" data-name="phone">Phone</th>
+    <th class="data-head__address" data-name="address">Address</th>
+    <th class="data-head__description" data-name="description">Description</th>
+    </tr>
+    </thead>
+    <tbody class="data__body">
+    ${[...this.data].map((item) => `
+      <tr class="data__item">
+      <td class="data__id">${item.id}</td>
+      <td class="data__firstName">${item.firstName}</td>
+      <td class="data__lastName">${item.lastName}</td>
+      <td class="data__email">${item.email}</td>
+      <td class="data__phone">${item.phone}</td>
+      <td class="data__address">${JSON.stringify(item.address).slice(1, -1)}</td>
+      <td class="data__description">${item.description}</td>
+      </tr>
+      `).join(``)}
+    </tbody> 
+    </table>
     `;
   }
 
-  // сортирует таблицу
-  sortGrid(colType, colNum) {
-    const grid = this.element.querySelector(`.data__table`);
-    const tbody = grid.querySelector(`.data__body`);
+  // показывает таблицу по страницам
+  showCurrentPage() {
+    const tbody = this.element.querySelector(`.data__body`);
     const rows = [...tbody.rows];
 
-    this.state.descSortFlag === true ? 
-    rows.sort(descSort(colType, colNum)) :
-    rows.sort(ascSort(colType, colNum));
-
-    grid.removeChild(tbody);
-    rows.forEach((row) => tbody.appendChild(row));
-    grid.appendChild(tbody);
+    rows.forEach((row, index) => {
+      if (index < this.state.firstRowIndex || index >= this.state.lastRowIndex) {
+        row.style.display = `none`;
+      }
+    })
   }
+  // отрисовывает направление сортировки
+  showSortIcon() {
+    const thead = this.element.querySelector(`.data__head`);
+    const headers = thead.querySelectorAll(`th`);
 
-  // отдает наружу строку для показа деталей
-  showDetail() { }
-
-  // поиск по таблице
-  gridSearch(phrase) { 
-    const grid = this.element.querySelector(`.data__table`);
-    const tbody = grid.querySelector(`.data__body`);
-    const rows = [...tbody.rows];
-
-    // убирает подсветку по предыдущим результатам
-    const lastResults = tbody.querySelectorAll(`.highlighted`);
-    if (lastResults) {
-      lastResults.forEach((it) => it.classList.remove(`highlighted`));
-    }
-
-    const textToFind = new RegExp(phrase, `ig`);
-    let searchFlag = false;
-
-    // поиск и подсветка результата
-    for (let i = 0; i < rows.length; i++) {
-      for (let j = 0; j < rows[i].cells.length; j++) {
-        searchFlag = textToFind.test(rows[i].cells[j].textContent);
-        if (searchFlag && phrase !== ``) {
-          let result = rows[i].cells[j];
-          result.classList.add(`highlighted`);
-          break;
-        }
-      }
-      // скрытие столбцов которые не подошли по результату
-      if (searchFlag) {
-        rows[i].style.display = ``;
-      } else {
-        rows[i].style.display = `none`;
-      }
+    const checkedHeader = [...headers].find((header) => header.getAttribute(`data-name`) === this.state.checkedHeaderName);
+    if (checkedHeader) {
+      this.state.sortFlag ? checkedHeader.classList.add(`downsort`) : checkedHeader.classList.add(`upsort`);
     }
   }
+  // возвращает выбранный объект для детализации
+  renderCheckedItem() { }
+  // возвращает выбранный заголовок для сортировки
+  renderCheckedHeader() { }
 
-  onGridClick(evt) { 
-    const grid = this.element.querySelector(`.data__table`);
+  onGridHeaderClick(checkedHeader) {
+    this.renderCheckedHeader(checkedHeader.getAttribute(`data-type`), checkedHeader.getAttribute(`data-name`));
+  }
 
-    if (evt.target.tagName === `TH`) {
-      // смена флага сортировки
-      this.state.descSortFlag = !this.state.descSortFlag; 
-      // графическое направление сортировки
-      grid.querySelectorAll(`th`).forEach((theader) => {
-        theader.classList.remove(`downsort`);
-        theader.classList.remove(`upsort`);
-      });
-
-      this.state.descSortFlag ? evt.target.classList.add(`downsort`) : evt.target.classList.add(`upsort`);
-
-      this.sortGrid(evt.target.getAttribute(`data-type`), evt.target.cellIndex);
-    } else {
-      this.showDetail(this.data.find((it) => it.id == evt.target.parentElement.querySelectorAll(`td`)[0].textContent));
-    }
+  onGridBodyClick(checkedCell) {
+    this.renderCheckedItem(this.data.find((it) => it.id == checkedCell.parentElement.querySelectorAll(`td`)[0].textContent));
   }
 
   bind() {
     const grid = this.element.querySelector(`.data__table`);
-    grid.addEventListener(`click`, (evt) => this.onGridClick(evt));
+
+    grid.addEventListener(`click`, (evt) => 
+      evt.target.tagName === `TH` ? this.onGridHeaderClick(evt.target) : this.onGridBodyClick(evt.target));
   }
 }

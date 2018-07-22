@@ -23,7 +23,6 @@ export default class SearchView extends AbstractView {
 		searchForm.addEventListener(`submit`, (evt) => {
 			evt.preventDefault();
 			this.onGridSearch(searchInput.value);
-			searchInput.value = ``;
 		});
 	}
 }
